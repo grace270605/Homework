@@ -1,5 +1,6 @@
 class MenuItem {
 
+    private String id;
     private String name;
     private double price;
     private int stock;
@@ -7,7 +8,8 @@ class MenuItem {
 
 
 
-    public MenuItem(String name, double price, int stock, Category category) {
+    public MenuItem(String name, double price, int stock, Category category, String id) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.stock = stock;
@@ -15,8 +17,13 @@ class MenuItem {
 
     }
 
+
     public MenuItem() {
 
+    }
+
+    public String getId() {
+        return id;
     }
 
     public Category getCategory() {
@@ -38,6 +45,7 @@ class MenuItem {
     public void setStock(int stock) {
         this.stock = stock;
     }
+
 }
 
     
