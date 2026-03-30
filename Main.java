@@ -1,7 +1,8 @@
-public class Main{
+public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         List<MenuItem> menu1 = new ArrayList<>();
+        List<String> menu2= new ArrayList<>();
 
         menu1.add(new MenuItem("1", "Nasi Goreng", 20000, 10, Category.FOOD));
         menu1.add(new MenuItem("2", "Sate", 25000, 8, Category.FOOD));
@@ -13,66 +14,69 @@ public class Main{
         menu1.add(new MenuItem("8", "Pudding", 12000, 10, Category.DESSERT));
         menu1.add(new MenuItem("9", "Cake", 20000, 5, Category.DESSERT));
 
-        System.out.println("Choose the menu :");
-        String menu = scanner.nextLine();
-    }
-    for(
-    int i = 0;i<JMenuItem.size();i++)
-    {
-        System.out.println(i + 1) + "." + 
-        JMenuItem.get(i).getName() + "-Stock:" +
-         JMenuItem.get(i).getStock();
-    }
-    System.out.print("Pilih menu(nomor):");
-    int pilihan = sc.nextInt();
-}
-    if(pilihan < 1 || pilihan >JMenuItem.size()){
-        System.out.
-
-    println("Pilihan  Tidak Valid!");
-    return;
+        double total = 0;
+        while (true) {
+            System.out.println("\n  DAFTAR MENU ");
+            for (MenuItem item : menu1) {
+                System.out.println(item.getId() + ". " + item.getName() +
+                        " - Stock: " + item.getStock());
             }
-    MenuItem selectedItem = menuList.get(pilihan -1);
+            try {
+                System.out.print("Choose the Menu: ");
+                String pilihan = scanner.nextLine();
+                
+                MenuItem selectedItem = null;
+                for (MenuItem item : menu1) {
+                    if (item.getId().equals(pilihan)) {
+                        selectedItem = item;
+                        break;
+                    }
+                }
+                if (selectedItem == null) {
+                    System.out.println("Menu tidak ditemukan!");
+                    continue;
+                }
+                System.out.print("Masukkan jumlah pesanan: ");
+                int jumlah = scanner.nextInt();
+                scanner.nextLine(); 
 
-        System.out.println("Masukkan jumlah pesanan:");
-        int jumlah = sc.nextInt();
+                if (jumlah > selectedItem.getStock()) {
+                    throw new ExceptionHandling("Stok tidak mencukupi untuk " + selectedItem.getName());
+                }
+                double total1 = selectedItem.getPrice() * jumlah;
+                total += total1;
+                menu2.add(selectedItem.getName() + " x" + jumlah + " = " + total1);
 
-        System.out.println("\n DETAIL PESANAN");
-        System.out.println("Menu: "+ selectedItem.getName());
-        System.out.println("Jumlah:"+ jumlah);
+                selectedItem.setStock(selectedItem.getStock() - jumlah);
+                System.out.println("\nDETAIL PESANAN");
+                System.out.println("Menu   : " + selectedItem.getName());
+                System.out.println("Jumlah : " + jumlah);
+                System.out.println("Total  : " + total1);
+                System.out.println("Pesanan Berhasil Dicatat!");
+                System.out.print("Tambah pesanan lagi? (y/n): ");
+                String lanjut = scanner.nextLine();
 
-        selectedItem.setStock(selectedItem.getStock()-jumlah);
-        System.out.println("Pesanan Berhasil Dicatat");
+                if (lanjut.equalsIgnoreCase("n")) {
+                    break;
+                }
 
+            } catch (ExceptionHandling e) {
+                System.out.println("Gagal: " + e.getMessage());
 
-        try{
-    System.out.print("Pilih menu(nomor):");
-    int pilihan = sc.nextInt();
+            } catch (Exception e) {
+                System.out.println("Terjadi kesalahan pada input!");
+                scanner.nextLine();
+            }
+        }
 
-    if(pilihan < 1 || pilihan >JMenuItem.size()){
-        System.out.
+        System.out.println("\n===== STRUK BELANJA =====");
+        for (String item : menu2) {
+            System.out.println(item);
+        }
+        System.out.println("--------------------");
+        System.out.println("TOTAL Rp. " + total);
+        System.out.println("====================");
 
-    println("Invalid!");
-    return;
+        scanner.close();
     }
-    MenuItem selectedItem = menuList.get(pilihan -1);
-
-        System.out.println("Masukkan jumlah pesanan:");
-        int jumlah = sc.nextInt();
-
-        if(jumlah > selectedItem.getStock()){
-            throw new OutOfStockException("Out of Stock! Item: "+selectedItem());
-        }
-        selectedItem.setStock(selectedItem.getStock()-jumlah);
-
-        System.out.println("\n DETAIL PESANAN");
-        System.out.println("Menu: "+ selectedItem.getName());
-        System.out.println("Jumlah:"+ jumlah);
-        System.out.println("Pesanan Berhasil Dicatat");
-    } catch (OutOfStockException e){
-        System.out.println("Gagal: " + e.getMessage());
-    }catch (Exception e) {
-     System.out.println("Terjadi kesalahan pada input data.");
-        } finally {
-            sc.close();
-        }
+}
