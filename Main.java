@@ -16,4 +16,30 @@ public class Main{
         System.out.println("Choose the menu :");
         String menu = scanner.nextLine();
     }
+    for(
+    int i = 0;i<JMenuItem.size();i++)
+    {
+        System.out.println(i + 1) + "." + 
+        JMenuItem.get(i).getName() + "-Stock:" +
+         JMenuItem.get(i).getStock();
+    }
+    System.out.print("Pilih menu(nomor):");
+    int pilihan = sc.nextInt();
 }
+    if(pilihan < 1 || pilihan >JMenuItem.size()){
+        System.out.
+
+    println("Pilihan  Tidak Valid!");
+    return;
+            }
+    MenuItem selectedItem = menuList.get(pilihan -1);
+
+        System.out.println("Masukkan jumlah pesanan:");
+        int jumlah = sc.nextInt();
+
+        System.out.println("\n DETAIL PESANAN");
+        System.out.println("Menu: "+ selectedItem.getName());
+        System.out.println("Jumlah:"+ jumlah);
+
+        selectedItem.setStock(selectedItem.getStock()-jumlah);
+        System.out.println("Pesanan Berhasil Dicatat");
