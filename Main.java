@@ -43,3 +43,36 @@ public class Main{
 
         selectedItem.setStock(selectedItem.getStock()-jumlah);
         System.out.println("Pesanan Berhasil Dicatat");
+
+
+        try{
+    System.out.print("Pilih menu(nomor):");
+    int pilihan = sc.nextInt();
+
+    if(pilihan < 1 || pilihan >JMenuItem.size()){
+        System.out.
+
+    println("Invalid!");
+    return;
+    }
+    MenuItem selectedItem = menuList.get(pilihan -1);
+
+        System.out.println("Masukkan jumlah pesanan:");
+        int jumlah = sc.nextInt();
+
+        if(jumlah > selectedItem.getStock()){
+            throw new OutOfStockException("Out of Stock! Item: "+selectedItem());
+        }
+        selectedItem.setStock(selectedItem.getStock()-jumlah);
+
+        System.out.println("\n DETAIL PESANAN");
+        System.out.println("Menu: "+ selectedItem.getName());
+        System.out.println("Jumlah:"+ jumlah);
+        System.out.println("Pesanan Berhasil Dicatat");
+    } catch (OutOfStockException e){
+        System.out.println("Gagal: " + e.getMessage());
+    }catch (Exception e) {
+     System.out.println("Terjadi kesalahan pada input data.");
+        } finally {
+            sc.close();
+        }
